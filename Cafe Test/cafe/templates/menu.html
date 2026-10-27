@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block mainclass %}wide{% endblock %}
+{% block content %}
+<p class="eyebrow"><i></i><b></b>Order now</p>
+<h1>Our Menu</h1>
+<p class="lead">Pick your favourites, choose how you'd like to receive them, and we'll start preparing right away.</p>
+<div class="menu3">
+  <nav class="side card">
+    <button class="cat-btn on" data-cat="all" style="--c:#43301f"><i></i>All items</button>
+    {% for g in groups %}<p class="grp">{{ g.name }}</p>
+    {% for c in g.cats %}<button class="cat-btn" data-cat="{{ c.id }}" style="--c:{{ c.color }}"><i></i>{{ c.name }}</button>{% endfor %}{% endfor %}
+  </nav>
+  <section>
+    {% for g in groups %}{% for c in g.cats %}
+    <div class="catblock" data-cat="{{ c.id }}" style="--c:{{ c.color }}">
+      <h2 class="cat"><span>{{ g.name }}</span>{{ c.name }}</h2>
+      <div class="grid">
+        {% for i in c['items'] %}
+        <article class="prod">
+          <div class="pic" data-e="{{ c.emoji }}"><img src="{{ i.img }}" alt="{{ i.name }}" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">{{ i.name }}</span><span class="pr">₱{{ i.price }}</span></div>
+          <button class="btn small" data-add="{{ i.id }}" data-name="{{ i.name }}" data-price="{{ i.price }}">Add</button>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}{% endfor %}
+  </section>
+  <aside class="card dark sticky">
+    <h2>Your order</h2>
+    <div id="cart"><p style="opacity:.7">Nothing yet — add something tasty.</p></div>
+    <div class="total"><span>Total</span><span>₱<span id="total">0</span></span></div>
+    <label>Order type
+      <select id="otype"><option value="dine-in">Dine-in</option><option value="takeaway">Takeaway</option><option value="delivery">Delivery</option></select></label>
+    <label id="tbl">Table no.<input id="table" maxlength="10"></label>
+    <p id="locnote" hidden><small>{% if me.lat is not none %}Delivering to: {{ me.address or 'your saved pin' }} (change it in Account).{% else %}No saved location — we'll ask for your browser location. You can save one in Account.{% endif %}</small></p>
+    <label>Payment
+      <select id="pay"><option value="cash">Cash</option><option value="gcash">GCash</option><option value="maya">Maya</option><option value="card">Credit / debit card</option></select></label>
+    <label>Coupon<input id="coupon" placeholder="WELCOME10"></label>
+    <label>Note<input id="note" maxlength="200"></label>
+    <button class="btn full" id="place">Place order</button>
+    <p id="err" class="flash" style="margin-top:1rem;color:var(--brown)" hidden></p>
+  </aside>
+</div>
+<script>
+const me = {{ me|tojson }}, cart = {}, $ = id => document.getElementById(id);
+$('pay').value = me.pay_method;
+document.querySelectorAll('.cat-btn').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.cat-btn').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.catblock').forEach(c => c.hidden = b.dataset.cat !== 'all' && c.dataset.cat !== b.dataset.cat);
+});
+function draw() {
+  const ids = Object.keys(cart); let total = 0;
+  $('cart').innerHTML = ids.length ? '' : '<p style="opacity:.7">Nothing yet — add something tasty.</p>';
+  ids.forEach(id => { const c = cart[id]; total += c.price * c.qty;
+    const d = document.createElement('div'); d.className = 'cartrow';
+    d.innerHTML = `<span></span><span>${c.qty} × ₱${c.price}</span><button class="btn small ghost">−</button>`;
+    d.firstChild.textContent = c.name;
+    d.querySelector('button').onclick = () => { if (--c.qty <= 0) delete cart[id]; draw(); };
+    $('cart').appendChild(d); });
+  $('total').textContent = total;
+}
+document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
+  const id = b.dataset.add; (cart[id] ||= {name: b.dataset.name, price: +b.dataset.price, qty: 0}).qty++; draw(); });
+$('otype').onchange = () => { $('tbl').hidden = $('otype').value !== 'dine-in'; $('locnote').hidden = $('otype').value !== 'delivery'; };
+const getPos = () => me.lat != null ? Promise.resolve({dest_lat: me.lat, dest_lng: me.lng}) :
+  new Promise(res => navigator.geolocation ? navigator.geolocation.getCurrentPosition(
+    p => res({dest_lat: p.coords.latitude, dest_lng: p.coords.longitude}), () => res({}), {timeout: 6000}) : res({}));
+$('place').onclick = async () => {
+  const items = Object.entries(cart).map(([id, c]) => ({id, qty: c.qty}));
+  const body = {items, order_type: $('otype').value, table_no: $('table').value, payment: $('pay').value,
+                coupon: $('coupon').value, note: $('note').value};
+  if (body.order_type === 'delivery') Object.assign(body, await getPos());
+  const r = await fetch('/api/orders', {method: 'POST', headers: {'Content-Type': 'application/json',
+    'X-CSRFToken': document.querySelector('meta[name=csrf]').content}, body: JSON.stringify(body)});
+  const j = await r.json();
+  if (r.ok) location.href = '/your-order?order=' + j.id;
+  else { $('err').hidden = false; $('err').textContent = j.error || 'Could not place order'; }
+};
+</script>
+{% endblock %}

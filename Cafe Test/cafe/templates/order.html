@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+{% block content %}
+<p class="eyebrow"><i></i><b></b>Live status</p>
+<h1>Your Order</h1>
+{% if not orders %}
+<p class="lead">You haven't ordered yet.</p><a class="btn" href="{{ url_for('menu.menu') }}">Browse the menu</a>
+{% else %}
+<p class="lead">Follow your order from our kitchen to your table or doorstep.</p>
+<div class="two">
+  <section>
+    {% for o in orders %}
+    <div class="card order" data-id="{{ o.id }}">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h2>Order #{{ o.id }}</h2><span class="badge" data-status>{{ o.status }}</span></div>
+      <small>{{ o.order_type }} · {{ o.payment }} · ₱{{ o.total }}</small>
+      <ul>{% for i in o['items'] %}<li>{{ i.qty }} × {{ i.name }}</li>{% endfor %}</ul>
+      <button class="btn small ghost">Track</button>
+    </div>
+    {% endfor %}
+  </section>
+  <aside class="card dark sticky">
+    <h2 id="tt">Order tracking</h2>
+    <ol id="steps" class="steps"></ol>
+    <div id="map"></div>
+    <small id="mapnote"></small>
+  </aside>
+</div>
+<script>
+const orders = {{ orders|tojson }}, cafe = {{ cafe|tojson }};
+let sel = null, timer = null, map, courier, home;
+function ensureMap() {
+  if (map) return;
+  map = L.map('map').setView(cafe, 15);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+  L.marker(cafe).addTo(map).bindPopup('New Found Cafe');
+}
+function show(o) {
+  ensureMap();
+  document.getElementById('tt').textContent = 'Order #' + o.id + ' — ' + o.status;
+  const i = o.steps.indexOf(o.status);
+  document.getElementById('steps').innerHTML = o.steps.map((s, n) => `<li class="${n <= i ? 'done' : ''}">${s}</li>`).join('');
+  const card = document.querySelector(`.order[data-id="${o.id}"] [data-status]`); if (card) card.textContent = o.status;
+  const pos = [o.lat ?? cafe[0], o.lng ?? cafe[1]];
+  if (!courier) courier = L.circleMarker(pos, {radius: 9, color: '#43301f', fillColor: '#d4793f', fillOpacity: 1}).addTo(map);
+  courier.setLatLng(pos).bindTooltip(o.status === 'Out for delivery' ? 'Your order is here' : 'Order location');
+  if (home) { map.removeLayer(home); home = null; }
+  if (o.dest) home = L.marker(o.dest).addTo(map).bindPopup('Delivery address');
+  map.fitBounds(L.latLngBounds([pos, cafe].concat(o.dest ? [o.dest] : [])).pad(.3), {maxZoom: 16});
+  document.getElementById('mapnote').textContent = o.order_type === 'delivery' ? 'Updates every 5 seconds.' : 'This order is prepared at the cafe.';
+}
+async function poll() { const r = await fetch('/api/orders/' + sel + '/track'); if (r.ok) show(await r.json()); }
+function select(id) {
+  sel = id; clearInterval(timer);
+  document.querySelectorAll('.order').forEach(e => e.classList.toggle('active', +e.dataset.id === id));
+  setTimeout(() => { map && map.invalidateSize(); poll(); }, 50);
+  timer = setInterval(poll, 5000);
+}
+document.querySelectorAll('.order').forEach(e => e.querySelector('button').onclick = () => select(+e.dataset.id));
+ensureMap(); select(+new URLSearchParams(location.search).get('order') || orders[0].id);
+</script>
+{% endif %}
+{% endblock %}

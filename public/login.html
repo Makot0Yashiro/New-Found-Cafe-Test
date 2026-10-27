@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf" content="">
+<title>New Found Cafe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="/static/css/cafe.css">
+
+</head><body>
+<header class="top">
+  <a href="/" class="brand">New Found Cafe</a>
+  <nav>
+    <a href="/menu" class="">Menu</a>
+    <a href="/your-order" class="">Your Order</a>
+    
+    <a href="/account" class="">Account</a>
+    <a href="/login">Login</a>
+  </nav>
+</header>
+<main class="">
+
+
+<form method="post" class="card narrow">
+  <p class="eyebrow"><i></i><b></b>Welcome back</p>
+  <h1 style="font-size:2.2rem">Login</h1>
+  <input type="hidden" name="csrf" value="">
+  
+  <label>Email<input type="email" name="email" required></label>
+  <label>Password<input type="password" name="password" required></label>
+  <button class="btn full">Login</button>
+  <p style="margin-top:1.2rem;font-size:.9rem">
+  No account? <a href="/register">Register</a>
+  </p>
+</form>
+
+</main>
+<script type="module" src="/static/js/app.js"></script></body></html>

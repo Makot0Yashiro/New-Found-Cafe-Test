@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf" content="">
+<title>New Found Cafe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="/static/css/cafe.css">
+
+</head><body>
+<header class="top">
+  <a href="/" class="brand">New Found Cafe</a>
+  <nav>
+    <a href="/menu" class="on">Menu</a>
+    <a href="/your-order" class="">Your Order</a>
+    
+    <a href="/account" class="">Account</a>
+    <a href="/login">Login</a>
+  </nav>
+</header>
+<main class="wide">
+
+
+<p class="eyebrow"><i></i><b></b>Order now</p>
+<h1>Our Menu</h1>
+<p class="lead">Pick your favourites, choose how you'd like to receive them, and we'll start preparing right away.</p>
+<div class="menu3">
+  <nav class="side card">
+    <button class="cat-btn on" data-cat="all" style="--c:#43301f"><i></i>All items</button>
+    <p class="grp">Food</p>
+    <button class="cat-btn" data-cat="food" style="--c:#c8553d"><i></i>Food</button><p class="grp">Beverages</p>
+    <button class="cat-btn" data-cat="coffee" style="--c:#8a5a33"><i></i>Coffee</button><button class="cat-btn" data-cat="icetea" style="--c:#3f8a6b"><i></i>Ice Tea</button><button class="cat-btn" data-cat="floats" style="--c:#b5578a"><i></i>Floats</button>
+  </nav>
+  <section>
+    
+    <div class="catblock" data-cat="food" style="--c:#c8553d">
+      <h2 class="cat"><span>Food</span>Food</h2>
+      <div class="grid">
+        
+        <article class="prod">
+          <div class="pic" data-e="🍔"><img src="https://loremflickr.com/480/360/french,fries?lock=28" alt="Fries" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Fries</span><span class="pr">₱99</span></div>
+          <button class="btn small" data-add="fries" data-name="Fries" data-price="99">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🍔"><img src="https://loremflickr.com/480/360/nachos?lock=29" alt="Nachos" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Nachos</span><span class="pr">₱149</span></div>
+          <button class="btn small" data-add="nachos" data-name="Nachos" data-price="149">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🍔"><img src="https://loremflickr.com/480/360/burger?lock=30" alt="Burger" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Burger</span><span class="pr">₱189</span></div>
+          <button class="btn small" data-add="burger" data-name="Burger" data-price="189">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🍔"><img src="https://loremflickr.com/480/360/salad?lock=31" alt="Salad" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Salad</span><span class="pr">₱139</span></div>
+          <button class="btn small" data-add="salad" data-name="Salad" data-price="139">Add</button>
+        </article>
+        
+      </div>
+    </div>
+    
+    <div class="catblock" data-cat="coffee" style="--c:#8a5a33">
+      <h2 class="cat"><span>Beverages</span>Coffee</h2>
+      <div class="grid">
+        
+        <article class="prod">
+          <div class="pic" data-e="☕"><img src="https://loremflickr.com/480/360/matcha,latte?lock=42" alt="Matcha Latte" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Matcha Latte</span><span class="pr">₱135</span></div>
+          <button class="btn small" data-add="c-matcha" data-name="Matcha Latte" data-price="135">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="☕"><img src="https://loremflickr.com/480/360/latte,coffee?lock=43" alt="Coffee Latte" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Coffee Latte</span><span class="pr">₱120</span></div>
+          <button class="btn small" data-add="c-latte" data-name="Coffee Latte" data-price="120">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="☕"><img src="https://loremflickr.com/480/360/caramel,coffee?lock=44" alt="Salted Caramel" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Salted Caramel</span><span class="pr">₱140</span></div>
+          <button class="btn small" data-add="c-caramel" data-name="Salted Caramel" data-price="140">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="☕"><img src="https://loremflickr.com/480/360/americano,coffee?lock=45" alt="Americano" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Americano</span><span class="pr">₱95</span></div>
+          <button class="btn small" data-add="c-americano" data-name="Americano" data-price="95">Add</button>
+        </article>
+        
+      </div>
+    </div>
+    
+    <div class="catblock" data-cat="icetea" style="--c:#3f8a6b">
+      <h2 class="cat"><span>Beverages</span>Ice Tea</h2>
+      <div class="grid">
+        
+        <article class="prod">
+          <div class="pic" data-e="🧋"><img src="https://loremflickr.com/480/360/iced,matcha?lock=42" alt="Matcha Iced Tea" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Matcha Iced Tea</span><span class="pr">₱130</span></div>
+          <button class="btn small" data-add="t-matcha" data-name="Matcha Iced Tea" data-price="130">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🧋"><img src="https://loremflickr.com/480/360/oreo,milkshake?lock=43" alt="Cookies and Cream" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Cookies and Cream</span><span class="pr">₱140</span></div>
+          <button class="btn small" data-add="t-oreo" data-name="Cookies and Cream" data-price="140">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🧋"><img src="https://loremflickr.com/480/360/chocolate,cherry,drink?lock=44" alt="Black Forest Iced Tea" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Black Forest Iced Tea</span><span class="pr">₱145</span></div>
+          <button class="btn small" data-add="t-blackforest" data-name="Black Forest Iced Tea" data-price="145">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🧋"><img src="https://loremflickr.com/480/360/iced,chocolate,drink?lock=45" alt="Chocolate Iced Tea" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Chocolate Iced Tea</span><span class="pr">₱130</span></div>
+          <button class="btn small" data-add="t-choco" data-name="Chocolate Iced Tea" data-price="130">Add</button>
+        </article>
+        
+      </div>
+    </div>
+    
+    <div class="catblock" data-cat="floats" style="--c:#b5578a">
+      <h2 class="cat"><span>Beverages</span>Floats</h2>
+      <div class="grid">
+        
+        <article class="prod">
+          <div class="pic" data-e="🍨"><img src="https://loremflickr.com/480/360/chocolate,float?lock=42" alt="Chocolate Float" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Chocolate Float</span><span class="pr">₱150</span></div>
+          <button class="btn small" data-add="f-choco" data-name="Chocolate Float" data-price="150">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🍨"><img src="https://loremflickr.com/480/360/icecream,float,cherry?lock=43" alt="Black Forest Float" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Black Forest Float</span><span class="pr">₱160</span></div>
+          <button class="btn small" data-add="f-blackforest" data-name="Black Forest Float" data-price="160">Add</button>
+        </article>
+        
+        <article class="prod">
+          <div class="pic" data-e="🍨"><img src="https://loremflickr.com/480/360/matcha,icecream?lock=44" alt="Matcha Float" loading="lazy" onerror="this.style.display='none'"></div>
+          <div class="info"><span class="nm">Matcha Float</span><span class="pr">₱155</span></div>
+          <button class="btn small" data-add="f-matcha" data-name="Matcha Float" data-price="155">Add</button>
+        </article>
+        
+      </div>
+    </div>
+    
+  </section>
+  <aside class="card dark sticky">
+    <h2>Your order</h2>
+    <div id="cart"><p style="opacity:.7">Nothing yet — add something tasty.</p></div>
+    <div class="total"><span>Total</span><span>₱<span id="total">0</span></span></div>
+    <label>Order type
+      <select id="otype"><option value="dine-in">Dine-in</option><option value="takeaway">Takeaway</option><option value="delivery">Delivery</option></select></label>
+    <label id="tbl">Table no.<input id="table" maxlength="10"></label>
+    <p id="locnote" hidden><small>Delivery uses your saved address and map pin. Update them in Account before ordering.</small></p>
+    <label>Payment
+      <select id="pay"><option value="cash">Cash</option><option value="gcash">GCash</option><option value="maya">Maya</option><option value="card">Credit / debit card</option></select></label>
+    <label>Coupon<input id="coupon" placeholder="WELCOME10"></label>
+    <label>Note<input id="note" maxlength="200"></label>
+    <small>Payment is arranged with the cafe. Selecting a method does not charge you.</small><button class="btn full" id="place">Place order</button>
+    <p id="err" class="flash" style="margin-top:1rem;color:var(--brown)" hidden></p>
+  </aside>
+</div>
+<script type="module">
+import { ready, api, initAccount, placeOrder } from "/static/js/app.js";
+await ready;
+try {
+const me = await api("/api/account"), cart = {}, $ = id => document.getElementById(id);
+$('pay').value = me.pay_method;
+document.querySelectorAll('.cat-btn').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.cat-btn').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.catblock').forEach(c => c.hidden = b.dataset.cat !== 'all' && c.dataset.cat !== b.dataset.cat);
+});
+function draw() {
+  const ids = Object.keys(cart); let total = 0;
+  $('cart').innerHTML = ids.length ? '' : '<p style="opacity:.7">Nothing yet — add something tasty.</p>';
+  ids.forEach(id => { const c = cart[id]; total += c.price * c.qty;
+    const d = document.createElement('div'); d.className = 'cartrow';
+    d.innerHTML = `<span></span><span>${c.qty} × ₱${c.price}</span><button class="btn small ghost">−</button>`;
+    d.firstChild.textContent = c.name;
+    d.querySelector('button').onclick = () => { if (--c.qty <= 0) delete cart[id]; draw(); };
+    $('cart').appendChild(d); });
+  $('total').textContent = total;
+}
+document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => {
+  const id = b.dataset.add; (cart[id] ||= {name: b.dataset.name, price: +b.dataset.price, qty: 0}).qty++; draw(); });
+$('otype').onchange = () => { $('tbl').hidden = $('otype').value !== 'dine-in'; $('locnote').hidden = $('otype').value !== 'delivery'; };
+$('place').onclick = () => placeOrder(cart, me);
+} catch (error) { const notice = document.createElement("p"); notice.className = "flash"; notice.setAttribute("role", "alert"); notice.textContent = error.message || "Please reload and try again."; document.querySelector("main").prepend(notice); }
+</script>
+
+</main>
+<script type="module" src="/static/js/app.js"></script></body></html>

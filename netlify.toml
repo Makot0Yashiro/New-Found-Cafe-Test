@@ -1,0 +1,41 @@
+[build]
+  command = "node scripts/prepare.mjs"
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+[[redirects]]
+  from = "/register"
+  to = "/register.html"
+  status = 200
+[[redirects]]
+  from = "/menu"
+  to = "/menu.html"
+  status = 200
+[[redirects]]
+  from = "/account"
+  to = "/account.html"
+  status = 200
+[[redirects]]
+  from = "/your-order"
+  to = "/your-order.html"
+  status = 200
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+[[redirects]]
+  from = "/admin/orders"
+  to = "/admin.html"
+  status = 200
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

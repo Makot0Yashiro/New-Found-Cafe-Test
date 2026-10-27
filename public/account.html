@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf" content="">
+<title>New Found Cafe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Poppins:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="/static/css/cafe.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</head><body>
+<header class="top">
+  <a href="/" class="brand">New Found Cafe</a>
+  <nav>
+    <a href="/menu" class="">Menu</a>
+    <a href="/your-order" class="">Your Order</a>
+    
+    <a href="/account" class="on">Account</a>
+    <a href="/login">Login</a>
+  </nav>
+</header>
+<main class="">
+
+
+<p class="eyebrow"><i></i><b></b>My details</p>
+<h1>Account</h1>
+<p class="lead">Keep your details up to date so ordering and delivery are quick.</p>
+<form method="post">
+  <input type="hidden" name="csrf" value="">
+  <input type="hidden" name="lat" id="lat" value="">
+  <input type="hidden" name="lng" id="lng" value="">
+  <div class="two">
+    <div>
+      <div class="card">
+        <h2>Profile</h2>
+        <label>Username<input name="name" value="" required maxlength="60"></label>
+        <div class="grid2">
+          <label>Email<input type="email" name="email" value="" required></label>
+          <label>Contact number<input type="tel" name="phone" value="" placeholder="09XX XXX XXXX"></label>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Payment</h2>
+        <div class="grid2">
+          <label>Preferred mode of payment
+            <select name="pay_method"><option value="cash" selected>Cash</option><option value="gcash" >GCash</option><option value="maya" >Maya</option><option value="card" >Credit / debit card</option></select></label>
+          <label>Online payment number (GCash / Maya)<input type="tel" name="pay_account" value="" placeholder="09XX XXX XXXX"></label>
+        </div>
+        <small>We only save your e-wallet number — never card details.</small>
+      </div>
+    </div>
+    <div class="card dark">
+      <h2>Delivery location</h2>
+      <label>Address<input name="address" value="" maxlength="200" placeholder="House no., street, barangay"></label>
+      <div id="pick"></div>
+      <small>Tap the map to drop your pin, or</small>
+      <button type="button" class="btn small ghost" id="here" style="margin-left:.4rem">Use my location</button>
+    </div>
+  </div>
+  <button class="btn">Save changes</button>
+</form>
+<script type="module">
+import { ready, api, initAccount, placeOrder } from "/static/js/app.js";
+await ready;
+await initAccount();
+const cafe = [14.2781, 121.4161], $ = id => document.getElementById(id);
+const start = $('lat').value ? [+$('lat').value, +$('lng').value] : cafe;
+const map = L.map('pick').setView(start, $('lat').value ? 16 : 14);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+let pin = $('lat').value ? L.marker(start).addTo(map) : null;
+function setPin(ll) {
+  $('lat').value = ll.lat.toFixed(6); $('lng').value = ll.lng.toFixed(6);
+  pin ? pin.setLatLng(ll) : (pin = L.marker(ll).addTo(map));
+}
+map.on('click', e => setPin(e.latlng));
+$('here').onclick = () => navigator.geolocation && navigator.geolocation.getCurrentPosition(p => {
+  const ll = L.latLng(p.coords.latitude, p.coords.longitude); setPin(ll); map.setView(ll, 17); });
+</script>
+
+</main>
+<script type="module" src="/static/js/app.js"></script></body></html>
